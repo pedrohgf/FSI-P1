@@ -10,10 +10,8 @@ Sigma = cov(X);
 
 Z = zeros(size(X, 1), K);
 for i=1:size(X,1)
-    
+
     x = X(i,:)';
     Z(i,:) = x'*U(:,K); %projects the data into a K dimension
 
 end
-
-
