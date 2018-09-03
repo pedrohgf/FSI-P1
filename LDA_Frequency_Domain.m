@@ -8,17 +8,17 @@ NumberOfImages = size(Dataset, 3);
 TrainingRate = 1;
 
 Subset = Dataset(:,:,1:TrainingRate*NumberOfImages);
-Features = reshape(Subset,[NumberOfColumns*NumberOfRows, TrainingRate*NumberOfImages]); 
+Features = getFeatures(Dataset);
 FeaturesLabel = Labels(1:TrainingRate*NumberOfImages);
-Model = fitcdiscr(Features', FeaturesLabel, 'DiscrimType', 'pseudolinear');
+Model = fitcdiscr(Features, FeaturesLabel, 'DiscrimType', 'pseudolinear');
 
 Testset = ReadDataset('t10k-images.idx3-ubyte');
 NumberOfTestData = size(Testset, 3);
 
-Testset = reshape(Testset, [NumberOfColumns*NumberOfRows, NumberOfTestData]);
+Testset = getFeatures(Testset);
 TestLabels = ReadLabel('t10k-labels.idx1-ubyte');
 
-LabelsPredicted = predict(Model, Testset');
+LabelsPredicted = predict(Model, Testset);
 
 ConfusionMatrix = zeros(10, 10);
 for i=1:10
